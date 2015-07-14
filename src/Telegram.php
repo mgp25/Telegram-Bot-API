@@ -99,7 +99,7 @@ class telegramBot
   {
     $data = compact('chat_id', 'photo', 'caption', 'reply_to_message_id', 'reply_markup');
 
-    if (((!is_dir($photo)) && (filter_var($url, FILTER_VALIDATE_URL) === FALSE)))
+    if (((!is_dir($photo)) && (filter_var($photo, FILTER_VALIDATE_URL) === FALSE)))
       return $this->sendRequest('sendPhoto', $data);
 
     return $this->uploadFile('sendPhoto', $data);
@@ -115,15 +115,47 @@ class telegramBot
 
   private function uploadFile($method, $data)
   {
-    $finfo = finfo_open(FILEINFO_MIME_TYPE);
-    $mime_type = finfo_file($finfo, $data['photo']);
-    $data['photo'] = new CurlFile($data['photo'], $mime_type, $data['photo']);
+    $file = __DIR__ . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR . mt_rand(0, 9999);
+    if (filter_var($data['photo'], FILTER_VALIDATE_URL))
+    {
+      $url = true;
+      file_put_contents($file, file_get_contents($data['photo']));
+      $finfo = finfo_open(FILEINFO_MIME_TYPE);
+      $mime_type = finfo_file($finfo, $file);
+      switch($mime_type)
+  		{
+  			case "image/jpeg":
+  				$ext = ".jpg";
+  				break;
+  			case "image/png":
+  				$ext = ".png";
+  				break;
+        case "image/gif":
+          $ext = ".gif";
+          break;
+      }
+      $newFile = $file . $ext;
+      rename($file, $newFile);
+      $data['photo'] = new CurlFile($newFile, $mime_type, $newFile);
+    }
+    else
+    {
+      $finfo = finfo_open(FILEINFO_MIME_TYPE);
+      $mime_type = finfo_file($finfo, $data['photo']);
+      $data['photo'] = new CurlFile($data['photo'], $mime_type, $data['photo']);
+    }
+
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $this->baseURL . $method);
     curl_setopt($ch, CURLOPT_POST, 1);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 
-    return json_decode(curl_exec($ch), true);
+    $response = json_decode(curl_exec($ch), true);
+
+    if ($url)
+      unlink($newFile);
+
+    return $response;
   }
 
 }
