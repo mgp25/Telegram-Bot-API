@@ -9,22 +9,47 @@ class telegramBot
   public function __construct($token)
   {
     $this->token = $token;
-    $this->baseURL = BASE_URL . $this->token . DIRECTORY_SEPARATOR;
+    $this->baseURL = self::BASE_URL . $this->token . DIRECTORY_SEPARATOR;
   }
 
-  function pollUpdates($offset, $timeout = 60, $limit = 100)
+  public function pollUpdates($offset, $timeout = 60, $limit = 100)
   {
-    return json_decode(file_get_contents($this->baseURL . "getUpdates?offset=$offset&timeout=$timeout&limit=$limit"), true);
+    $params = array(
+      'offset' => $offset
+    );
+
+    if ($timeout != 60)
+      $params['timeout'] = $timeout;
+    if ($limit != 100)
+      $params['limit'] = $limit;
+
+    return $this->sendRequest('getUpdates', $params);
   }
 
-  function sendMessage($chatID, $text)
+  public function sendMessage($chatID, $text)
   {
-    return json_decode(file_get_contents($this->baseURL . "sendMessage?chat_id=$chatID&text=" . urlencode($text)), true);
+    $params = array(
+      'chat_id' => $chatID,
+      'text'    => $text
+    );
+
+    return $this->sendRequest('sendMessage', $params);
   }
 
-  function forwardMessage($chatID, $fromChatID, $messageID)
+  public function forwardMessage($chatID, $fromChatID, $messageID)
   {
-    return json_decode(file_get_contents($this->baseURL . "forwardMessage?chat_id=$chatID&from_chat_id=$fromChatID&message_id=$messageID"), true);
+    $params = array(
+      'chat_id'      => $chatID,
+      'from_chat_id' => $fromChatID,
+      'message_id'   => $messageID
+    );
+
+    return $this->sendRequest('forwardMessage', $params);
+  }
+
+  public function sendRequest($method, $params)
+  {
+    return json_decode(file_get_contents($this->baseURL . $method . '?' . http_build_query($params)), true);
   }
 
 }
