@@ -326,19 +326,19 @@ class telegramBot
       file_put_contents($file, file_get_contents($data['photo']));
       $finfo = finfo_open(FILEINFO_MIME_TYPE);
       $mime_type = finfo_file($finfo, $file);
-      switch($mime_type)
-  		{
-  			case "image/jpeg":
-  				$ext = ".jpg";
-  				break;
-  			case "image/png":
-  				$ext = ".png";
-  				break;
-        case "image/gif":
-          $ext = ".gif";
-          break;
-      }
-      $newFile = $file . $ext;
+
+      $extensions = array(
+        'image/jpeg'  => '.jpg',
+        'image/png'   =>  '.png',
+        'image/gif'   =>  '.gif',
+        'image/bmp'   =>  '.bmp',
+        'image/tiff'  =>  '.tif',
+      );
+
+      if (!in_array($ext, $extensions))
+        throw new TelegramException('Bad file type/extension');
+        
+      $newFile = $file . $ext[$mime_type];
       rename($file, $newFile);
       $data['photo'] = new CurlFile($newFile, $mime_type, $newFile);
     }
