@@ -2,10 +2,11 @@
 
 ![botFather](http://cl.ly/image/2Z0o2W3G0E1q/Untitled-3.png)
 
+[![Total Downloads](https://poser.pugx.org/mgp25/telegram-bot-api/downloads)](https://packagist.org/packages/mgp25/telegram-bot-api)
 ### Installation
 
 ```sh
-composer require mgp25/telegram-bot-api
+$ composer require mgp25/telegram-bot-api
 ```
 
 
