@@ -1,0 +1,25 @@
+{
+    "name": "mgp25/telegram-bot-api",
+    "description": "Telegram Bot PHP API",
+    "license": "MIT",
+    "keywords": [
+        "Telegram",
+        "Telegram-API",
+        "Telegram-Bot-API",
+        "Telegram-Bot-PHP"
+    ],
+    "support": {
+        "issues": "https://github.com/mgp25/Telegram-Bot-API/issues",
+        "wiki": "https://github.com/mgp25/Telegram-Bot-API/wiki",
+        "source": "https://github.com/mgp25/Telegram-Bot-API"
+    },
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
+    },
+    "require": {
+        "php": ">=5.3",
+        "ext-curl": "*"
+    }
+}
