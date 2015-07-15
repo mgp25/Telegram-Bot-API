@@ -42,7 +42,7 @@ class telegramBot
    *
    * @return Array
    */
-  public function pollUpdates($offset, $timeout = null, $limit = null)
+  public function pollUpdates($offset = null, $timeout = null, $limit = null)
   {
     $params = compact('offset', 'limit', 'timeout');
 
@@ -361,10 +361,7 @@ class telegramBot
 
   private function sendRequest($method, $params)
   {
-    if ($method == 'getMe')
-      return json_decode(file_get_contents($this->baseURL . $method), true);
-
-    return json_decode(file_get_contents($this->baseURL . $method . '?' . http_build_query($params)), true);
+    return json_decode(file_get_contents($this->baseURL . $method . '?' . @http_build_query($params)), true);
   }
 
   private function uploadFile($method, $data)
