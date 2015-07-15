@@ -319,11 +319,19 @@ class telegramBot
 
   private function uploadFile($method, $data)
   {
+    $key = array(
+      'sendPhoto'    => 'photo',
+      'sendAudio'    => 'audio',
+      'sendDocument' => 'document',
+      'sendSticker'  => 'sticker',
+      'sendVideo'    => 'video'
+    );
+
     $file = __DIR__ . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR . mt_rand(0, 9999);
-    if (filter_var($data['photo'], FILTER_VALIDATE_URL))
+    if (filter_var($data[$key[$method]], FILTER_VALIDATE_URL))
     {
       $url = true;
-      file_put_contents($file, file_get_contents($data['photo']));
+      file_put_contents($file, file_get_contents($data[$key[$method]]));
       $finfo = finfo_open(FILEINFO_MIME_TYPE);
       $mime_type = finfo_file($finfo, $file);
 
@@ -333,20 +341,29 @@ class telegramBot
         'image/gif'   =>  '.gif',
         'image/bmp'   =>  '.bmp',
         'image/tiff'  =>  '.tif',
+        'audio/ogg'   =>  '.ogg',
+        'video/mp4'   =>  '.mp4',
+        'image/webp'  =>  '.webp'
       );
 
-      if (!in_array($ext, $extensions))
-        throw new TelegramException('Bad file type/extension');
-        
-      $newFile = $file . $ext[$mime_type];
+      if ($method != 'sendDocument')
+      {
+        if (!array_key_exists($mime_type, $extensions))
+        {
+          unlink($file);
+          throw new TelegramException('Bad file type/extension');
+        }
+      }
+
+      $newFile = $file . $extensions[$mime_type];
       rename($file, $newFile);
-      $data['photo'] = new CurlFile($newFile, $mime_type, $newFile);
+      $data[$key[$method]] = new CurlFile($newFile, $mime_type, $newFile);
     }
     else
     {
       $finfo = finfo_open(FILEINFO_MIME_TYPE);
-      $mime_type = finfo_file($finfo, $data['photo']);
-      $data['photo'] = new CurlFile($data['photo'], $mime_type, $data['photo']);
+      $mime_type = finfo_file($finfo, $data[$key[$method]]);
+      $data[$key[$method]] = new CurlFile($data[$key[$method]], $mime_type, $data[$key[$method]]);
     }
 
     $ch = curl_init();
