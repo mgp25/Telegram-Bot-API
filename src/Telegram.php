@@ -27,7 +27,7 @@ class telegramBot
    */
   public function getMe()
   {
-    return $this->sendRequest('getMe', null);
+    return $this->sendRequest('getMe', array());
   }
 
 
@@ -361,7 +361,7 @@ class telegramBot
 
   private function sendRequest($method, $params)
   {
-    return json_decode(file_get_contents($this->baseURL . $method . '?' . @http_build_query($params)), true);
+    return json_decode(file_get_contents($this->baseURL . $method . '?' . http_build_query($params)), true);
   }
 
   private function uploadFile($method, $data)
