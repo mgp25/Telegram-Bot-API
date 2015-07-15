@@ -11,6 +11,9 @@ class telegramBot
   public function __construct($token)
   {
     $this->token = $token;
+    if (is_null($this->token))
+      throw new TelegramException('Required "token" key not supplied');
+
     $this->baseURL = self::BASE_URL . $this->token . DIRECTORY_SEPARATOR;
   }
 
@@ -307,6 +310,53 @@ class telegramBot
  {
    $url = '';
    return $this->sendRequest('setWebhook', compact('url'));
+ }
+
+ /**
+  * Builds a custom keyboard markup.
+  *
+  * @link https://core.telegram.org/bots/api#replykeyboardmarkup
+  *
+  * @param array $keyboard
+  * @param bool  $resize_keyboard
+  * @param bool  $one_time_keyboard
+  * @param bool  $selective
+  *
+  * @return string
+  */
+ public function replyKeyboardMarkup($keyboard, $resize_keyboard = false, $one_time_keyboard = false, $selective = false)
+ {
+    return json_encode(compact('keyboard', 'resize_keyboard', 'one_time_keyboard', 'selective'));
+ }
+
+ /**
+  * Hide the current custom keyboard and display the default letter-keyboard.
+  *
+  * @link https://core.telegram.org/bots/api#replykeyboardhide
+  *
+  * @param bool $selective
+  *
+  * @return string
+  */
+ public static function replyKeyboardHide($selective = false)
+ {
+    $hide_keyboard = true;
+    return json_encode(compact('hide_keyboard', 'selective'));
+ }
+
+ /**
+  * Display a reply interface to the user (act as if the user has selected the bots message and tapped 'Reply').
+  *
+  * @link https://core.telegram.org/bots/api#forcereply
+  *
+  * @param bool $selective
+  *
+  * @return string
+  */
+ public static function forceReply($selective = false)
+ {
+    $force_reply = true;
+    return json_encode(compact('force_reply', 'selective'));
  }
 
   private function sendRequest($method, $params)
