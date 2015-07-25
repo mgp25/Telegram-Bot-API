@@ -1,9 +1,22 @@
-# Telegram Bot API
+# ![telegram](examples/assets/telegram.png) Telegram Bot API PHP
 
-![botFather](http://cl.ly/image/2Z0o2W3G0E1q/Untitled-3.png)
+A PHP wrapper for the Telegram Bot API.
 
-[![Total Downloads](https://poser.pugx.org/mgp25/telegram-bot-api/downloads)](https://packagist.org/packages/mgp25/telegram-bot-api)
-### Installation
+[![Latest Stable Version](https://poser.pugx.org/mgp25/telegram-bot-api/v/stable)](https://packagist.org/packages/mgp25/telegram-bot-api) [![Total Downloads](https://poser.pugx.org/mgp25/telegram-bot-api/downloads)](https://packagist.org/packages/mgp25/telegram-bot-api) [![License](https://poser.pugx.org/mgp25/telegram-bot-api/license)](https://packagist.org/packages/mgp25/telegram-bot-api)
+
+> [Composer](#installation) package available.  
+
+## Requirements
+
+- PHP 5.3 or higher
+- cURL
+- Telegram app (mobile or desktop)
+
+## Get started
+
+You will find everything you need to know to use this API in the [wiki](https://github.com/mgp25/Telegram-Bot-API/wiki)
+
+## Installation
 
 ```sh
 $ composer require mgp25/telegram-bot-api
