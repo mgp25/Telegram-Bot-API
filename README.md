@@ -22,10 +22,6 @@ You will find everything you need to know to use this API in the [wiki](https://
 $ composer require mgp25/telegram-bot-api
 ```
 
-### Wiki
-
-You will find everything you need to know to use this API in the [wiki](https://github.com/mgp25/Telegram-Bot-API/wiki)
-
 ### My Bots :)
 
 [@life_quotes_bot](https://telegram.me/life_quotes_bot) - Receive a life quote daily at 12pm (Central European Time Zone)
