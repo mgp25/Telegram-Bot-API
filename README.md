@@ -4,7 +4,7 @@ A PHP wrapper for the Telegram Bot API.
 
 [![Latest Stable Version](https://poser.pugx.org/mgp25/telegram-bot-api/v/stable)](https://packagist.org/packages/mgp25/telegram-bot-api) [![Total Downloads](https://poser.pugx.org/mgp25/telegram-bot-api/downloads)](https://packagist.org/packages/mgp25/telegram-bot-api) [![License](https://poser.pugx.org/mgp25/telegram-bot-api/license)](https://packagist.org/packages/mgp25/telegram-bot-api)
 
-> [Composer](#installation) package available.  
+> [Composer](https://github.com/mgp25/Telegram-Bot-API#installation) package available.  
 
 ## Requirements
 
