@@ -34,6 +34,9 @@ do
 
         if (!$sendQuestion)
         {
+          // sends an action 'typing'
+          $tg->sendChatAction($chat_id, 'typing');
+
           // send message with a custom reply markup
           $tg->sendMessage($chat_id, 'Guess the number', false, null, $reply_markup);
           $sendQuestion = true;
@@ -41,7 +44,11 @@ do
 
         if (($data['message']['text']) == 5)
         {
+          $tg->sendChatAction($chat_id, 'typing');
           $tg->sendMessage($chat_id, 'You did it! :)');
+
+          $tg->sendChatAction($chat_id, 'upload_photo');
+          $tg->sendPhoto($chat_id, 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/718smiley.png/220px-718smiley.png');
           $guessed = true;
         }
         else
