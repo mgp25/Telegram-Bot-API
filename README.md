@@ -8,7 +8,7 @@ A PHP wrapper for the Telegram Bot API.
 
 ## Requirements
 
-- PHP 5.3 or higher
+- PHP 5.5 or higher
 - cURL
 - Telegram app (mobile or desktop)
 
