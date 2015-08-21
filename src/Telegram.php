@@ -184,16 +184,18 @@ class telegramBot
    *
    * @link https://core.telegram.org/bots/api#sendvideo
    *
-   * @param int            $chat_id
-   * @param string         $video
-   * @param int            $reply_to_message_id
-   * @param KeyboardMarkup $reply_markup
+   * @param int             $chat_id
+   * @param string          $video
+   * @param int             $duration
+   * @param string          $caption
+   * @param int             $reply_to_message_id
+   * @param KeyboardMarkup  $reply_markup
    *
    * @return Array
    */
-  public function sendVideo($chat_id, $video, $reply_to_message_id = null, $replyMarkup = null)
+  public function sendVideo($chat_id, $video, $duration = null, $caption = null, $reply_to_message_id = null, $replyMarkup = null)
   {
-    $data = compact('chat_id', 'video', 'reply_to_message_id', 'reply_markup');
+    $data = compact('chat_id', 'video', 'duration', 'caption', 'reply_to_message_id', 'reply_markup');
 
     if (((!is_dir($video)) && (filter_var($video, FILTER_VALIDATE_URL) === FALSE)))
       return $this->sendRequest('sendVideo', $data);
