@@ -115,16 +115,19 @@ class telegramBot
    *
    * @link https://core.telegram.org/bots/api#sendaudio
    *
-   * @param int            $chat_id
-   * @param string         $audio
-   * @param int            $reply_to_message_id
-   * @param KeyboardMarkup $reply_markup
+   * @param int             $chat_id
+   * @param string          $audio
+   * @param int             $duration
+   * @param string          $performer
+   * @param string          $title
+   * @param int             $reply_to_message_id
+   * @param KeyboardMarkup  $reply_markup
    *
    * @return Array
    */
-  public function sendAudio($chat_id, $audio, $reply_to_message_id = null, $replyMarkup = null)
+  public function sendAudio($chat_id, $audio, $duration = null, $performer = null, $title = null, $reply_to_message_id = null, $reply_markup = null)
   {
-    $data = compact('chat_id', 'audio', 'reply_to_message_id', 'reply_markup');
+    $data = compact('chat_id', 'audio', 'duration', 'performer', 'title', 'reply_to_message_id', 'reply_markup');
 
     if (((!is_dir($audio)) && (filter_var($audio, FILTER_VALIDATE_URL) === FALSE)))
       return $this->sendRequest('sendAudio', $data);
