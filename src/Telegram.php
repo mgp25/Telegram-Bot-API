@@ -202,6 +202,29 @@ class telegramBot
   }
 
   /**
+   * Send Voice.
+   *
+   * @link https://core.telegram.org/bots/api#sendvoice
+   *
+   * @param int             $chat_id
+   * @param string          $audio
+   * @param int             $duration
+   * @param int             $reply_to_message_id
+   * @param KeyboardMarkup  $reply_markup
+   *
+   * @return Array
+   */
+  public function sendVoice($chat_id, $audio, $duration = null, $reply_to_message_id = null, $replyMarkup = null)
+  {
+    $data = compact('chat_id', 'audio', 'duration', 'reply_to_message_id', 'reply_markup');
+
+    if (((!is_dir($video)) && (filter_var($video, FILTER_VALIDATE_URL) === FALSE)))
+      return $this->sendRequest('sendVoice', $data);
+
+    return $this->uploadFile('sendVoice', $data);
+  }
+
+  /**
    * Send Location.
    *
    * @link https://core.telegram.org/bots/api#sendlocation
