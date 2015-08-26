@@ -100,7 +100,7 @@ class telegramBot
    *
    * @return Array
    */
-  public function sendPhoto($chat_id, $photo, $caption = null, $reply_to_message_id = null, $replyMarkup = null)
+  public function sendPhoto($chat_id, $photo, $caption = null, $reply_to_message_id = null, $reply_markup = null)
   {
     $data = compact('chat_id', 'photo', 'caption', 'reply_to_message_id', 'reply_markup');
 
@@ -147,7 +147,7 @@ class telegramBot
    *
    * @return Array
    */
-  public function sendDocument($chat_id, $document, $reply_to_message_id = null, $replyMarkup = null)
+  public function sendDocument($chat_id, $document, $reply_to_message_id = null, $reply_markup = null)
   {
     $data = compact('chat_id', 'document', 'reply_to_message_id', 'reply_markup');
 
@@ -169,7 +169,7 @@ class telegramBot
    *
    * @return Array
    */
-  public function sendSticker($chat_id, $sticker, $reply_to_message_id = null, $replyMarkup = null)
+  public function sendSticker($chat_id, $sticker, $reply_to_message_id = null, $reply_markup = null)
   {
     $data = compact('chat_id', 'sticker', 'reply_to_message_id', 'reply_markup');
 
@@ -193,7 +193,7 @@ class telegramBot
    *
    * @return Array
    */
-  public function sendVideo($chat_id, $video, $duration = null, $caption = null, $reply_to_message_id = null, $replyMarkup = null)
+  public function sendVideo($chat_id, $video, $duration = null, $caption = null, $reply_to_message_id = null, $reply_markup = null)
   {
     $data = compact('chat_id', 'video', 'duration', 'caption', 'reply_to_message_id', 'reply_markup');
 
@@ -216,7 +216,7 @@ class telegramBot
    *
    * @return Array
    */
-  public function sendVoice($chat_id, $audio, $duration = null, $reply_to_message_id = null, $replyMarkup = null)
+  public function sendVoice($chat_id, $audio, $duration = null, $reply_to_message_id = null, $reply_markup = null)
   {
     $data = compact('chat_id', 'audio', 'duration', 'reply_to_message_id', 'reply_markup');
 
