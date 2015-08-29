@@ -298,12 +298,13 @@ class telegramBot
  /**
   * Set a Webhook to receive incoming updates via an outgoing webhook.
   *
-  * @param string $url HTTPS url to send updates to.
+  * @param string     $url            HTTPS url to send updates to. Use an empty string to remove webhook integration
+  * @param InputFile  $cerificate     Upload your public key certificate so that the root certificate in use can be checked
   *
   * @return Array
   *
   */
- public function setWebhook($url)
+ public function setWebhook($url, $certificate = null)
  {
    if (filter_var($url, FILTER_VALIDATE_URL) === false)
      throw new TelegramException('Invalid URL provided');
@@ -311,7 +312,9 @@ class telegramBot
    if (parse_url($url, PHP_URL_SCHEME) !== 'https')
       throw new TelegramException('Invalid URL, it should be a HTTPS url.');
 
-   return $this->sendRequest('setWebhook', $url);
+  $params = compact('url', 'certificate');
+
+   return $this->sendRequest('setWebhook', $params);
 }
 
  /**
@@ -327,17 +330,6 @@ class telegramBot
    $body = json_decode(file_get_contents('php://input'), true);
 
    return $body;
- }
-
- /**
-  * Removes the outgoing webhook.
-  *
-  * @return Array
-  */
- public function removeWebhook()
- {
-   $url = '';
-   return $this->sendRequest('setWebhook', compact('url'));
  }
 
  /**
