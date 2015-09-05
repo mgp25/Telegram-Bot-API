@@ -312,7 +312,10 @@ class telegramBot
   if (parse_url($url, PHP_URL_SCHEME) !== 'https')
     throw new TelegramException('Invalid URL, it should be a HTTPS url.');
 
-  return $this->uploadFile('setWebhook', compact('url', 'certificate'));
+  if (is_null($certificate))
+    return $this->sendRequest('setWebhook', compact('url', 'certificate'));
+  else
+    return $this->uploadFile('setWebhook', compact('url', 'certificate'));
 }
 
  /**
