@@ -1,5 +1,7 @@
 <?php
 
+require '../src/Telegram.php';
+
 $token = ''; // HERE YOUR TOKEN
 // You will need a file called quotes (without extension)
 // from there it will take the quotes and send them to your subscribers :)
