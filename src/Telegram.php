@@ -306,15 +306,13 @@ class telegramBot
   */
  public function setWebhook($url, $certificate = null)
  {
-   if (filter_var($url, FILTER_VALIDATE_URL) === false)
-     throw new TelegramException('Invalid URL provided');
+  if (filter_var($url, FILTER_VALIDATE_URL) === false)
+    throw new TelegramException('Invalid URL provided');
 
-   if (parse_url($url, PHP_URL_SCHEME) !== 'https')
-      throw new TelegramException('Invalid URL, it should be a HTTPS url.');
+  if (parse_url($url, PHP_URL_SCHEME) !== 'https')
+    throw new TelegramException('Invalid URL, it should be a HTTPS url.');
 
-  $params = compact('url', 'certificate');
-
-   return $this->sendRequest('setWebhook', $params);
+  return $this->uploadFile('setWebhook', compact('url', 'certificate'));
 }
 
  /**
@@ -391,12 +389,14 @@ class telegramBot
       'sendAudio'    => 'audio',
       'sendDocument' => 'document',
       'sendSticker'  => 'sticker',
-      'sendVideo'    => 'video'
+      'sendVideo'    => 'video',
+      'setWebhook'   => 'certificate'
     );
 
-    $file = __DIR__ . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR . mt_rand(0, 9999);
     if (filter_var($data[$key[$method]], FILTER_VALIDATE_URL))
     {
+      $file = __DIR__ . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR . mt_rand(0, 9999);
+
       $url = true;
       file_put_contents($file, file_get_contents($data[$key[$method]]));
       $finfo = finfo_open(FILEINFO_MIME_TYPE);
