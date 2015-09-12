@@ -56,15 +56,16 @@ class telegramBot
    *
    * @param int            $chat_id
    * @param string         $text
+   * @param string         $parse_mode
    * @param bool           $disable_web_page_preview
    * @param int            $reply_to_message_id
    * @param KeyboardMarkup $reply_markup
    *
    * @return Array
    */
-  public function sendMessage($chat_id, $text, $disable_web_page_preview = false, $reply_to_message_id = null, $reply_markup = null)
+  public function sendMessage($chat_id, $text, $parse_mode = null, $disable_web_page_preview = false, $reply_to_message_id = null, $reply_markup = null)
   {
-    $params = compact('chat_id', 'text', 'disable_web_page_preview', 'reply_to_message_id', 'reply_markup');
+    $params = compact('chat_id', 'text', 'parse_mode', 'disable_web_page_preview', 'reply_to_message_id', 'reply_markup');
 
     return $this->sendRequest('sendMessage', $params);
   }
