@@ -14,7 +14,7 @@ class telegramBot
     if (is_null($this->token))
       throw new TelegramException('Required "token" key not supplied');
 
-    $this->baseURL = self::BASE_URL . $this->token . DIRECTORY_SEPARATOR;
+    $this->baseURL = self::BASE_URL . $this->token . '/';
   }
 
   /**
