@@ -291,10 +291,24 @@ class telegramBot
    */
   public function getUserProfilePhotos($user_id, $offset = null, $limit = null)
   {
-        $param = compact('user_id', 'offset', 'limit');
+    $param = compact('user_id', 'offset', 'limit');
 
-        return $this->sendRequest('getUserProfilePhotos', $params);
+    return $this->sendRequest('getUserProfilePhotos', $params);
   }
+
+  /**
+   * Use this method to get basic info about a file and prepare it for downloading.
+   *
+   * @link https://core.telegram.org/bots/api#getfile
+   *
+   * @param String            $file_id
+   *
+   * @return On success, a File object is returned
+   */
+   public function getFile($file_id)
+   {
+     return $this->sendRequest('getFile', compact('file_id'));
+   }
 
  /**
   * Set a Webhook to receive incoming updates via an outgoing webhook.
