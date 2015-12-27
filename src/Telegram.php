@@ -81,9 +81,9 @@ class telegramBot
    *
    * @return Array
    */
-  public function forwardMessage($chat_id, $from_chat_id, $from_chat_id)
+  public function forwardMessage($chat_id, $from_chat_id, $message_id)
   {
-    $params = compact('chat_id', 'from_chat_id', 'from_chat_id');
+    $params = compact('chat_id', 'from_chat_id', 'message_id');
 
     return $this->sendRequest('forwardMessage', $params);
   }
