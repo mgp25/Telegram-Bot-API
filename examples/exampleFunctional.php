@@ -2,14 +2,24 @@
 
 require '../src/Telegram.php';
 
-//                                       //
-///////// CONFIG YOUR BOT'S TOKEN /////////
+///////////// CONFIG YOUR BOT'S TOKEN /////////
+// Create telegram Bot token with @BotFather - https://github.com/mgp25/Telegram-Bot-API/wiki/Setup-Guide
+$token = "";  // HERE YOUR TOKEN
+//////////////////////////////////////////////////
+echo "####################################\n";
+echo "#          Telegram CLIENT         #\n";
+echo "####################################\n\n";
+
 $tg = new telegramBot($token);
 
 $chat_id      = null;
 $guessed      = false;
 $sendQuestion = false;
+$offset = 0;
 
+echo "Get Bot Information:\n";
+$updates = $tg->getMe();
+echo json_encode($updates) . "\n";
 
 // Custom keyboard
 $customKeyboard = [
@@ -25,7 +35,7 @@ do
   // Get updates the bot has received
   // Offset to confirm previous updates
   $updates = $tg->pollUpdates($offset);
-  if ($updates['ok'])
+  if ($updates['ok'] && count($updates['result']) > 0)
   {
     foreach($updates['result'] as $data)
     {
@@ -38,7 +48,8 @@ do
           $tg->sendChatAction($chat_id, 'typing');
 
           // send message with a custom reply markup
-          $tg->sendMessage($chat_id, 'Guess the number', false, null, $reply_markup);
+          $tg->sendMessage($chat_id, 'Guess the number', null, false, null, $reply_markup);
+              
           $sendQuestion = true;
         }
 
@@ -51,8 +62,8 @@ do
           $tg->sendPhoto($chat_id, 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/718smiley.png/220px-718smiley.png');
           $guessed = true;
         }
-        else
-          $tg->sendMessage($chat_id, 'Wrong number :/ try again', false, null, $reply_markup);
+        else          
+          $tg->sendMessage($chat_id, 'Wrong number :/ try again', null, false, null, $reply_markup);
     }
     $offset = $updates['result'][count($updates['result']) - 1]['update_id'] + 1;
   }
