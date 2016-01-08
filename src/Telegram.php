@@ -294,7 +294,7 @@ class telegramBot
    */
   public function getUserProfilePhotos($user_id, $offset = null, $limit = null)
   {
-    $param = compact('user_id', 'offset', 'limit');
+    $params = compact('user_id', 'offset', 'limit');
 
     return $this->sendRequest('getUserProfilePhotos', $params);
   }
