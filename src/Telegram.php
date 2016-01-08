@@ -4,8 +4,10 @@ require 'Exception.php';
 
 class telegramBot
 {
-  const BASE_URL = 'https://api.telegram.org/bot';
-
+  const BASE_URL = 'https://api.telegram.org';
+  const BOT_URL = '/bot';
+  const FILE_URL = '/file';
+    
   protected $token;
 
   public function __construct($token)
@@ -14,7 +16,8 @@ class telegramBot
     if (is_null($this->token))
       throw new TelegramException('Required "token" key not supplied');
 
-    $this->baseURL = self::BASE_URL . $this->token . '/';
+    $this->baseURL = self::BASE_URL . self::BOT_URL . $this->token . '/';
+    $this->baseFileURL = self::BASE_URL . self::FILE_URL . self::BOT_URL . $this->token . '/';
   }
 
   /**
@@ -309,6 +312,23 @@ class telegramBot
    {
      return $this->sendRequest('getFile', compact('file_id'));
    }
+   
+   /**
+    * Use this method to get file Data.
+    *
+    * @link https://core.telegram.org/bots/api#getfile
+    * 
+    * @see getFile
+    *
+    * @param string		$file_id
+    * @param string		$file_path		Is taken from the getFile response				
+    *
+    * @return On success, a File Data is returned
+    */
+   public function getFileData($file_id, $file_path)
+   {
+   	return file_get_contents($this->baseFileURL . $file_path . '?' . http_build_query(compact('file_id')));   	
+   }   
 
  /**
   * Set a Webhook to receive incoming updates via an outgoing webhook.
