@@ -251,6 +251,51 @@ class telegramBot
   }
 
   /**
+   * Send Venue.
+   *
+   * @link https://core.telegram.org/bots/api#sendvenue
+   *
+   * @param int            $chat_id
+   * @param float          $latitude
+   * @param float          $longitude
+   * @param string         $title
+   * @param string         $address
+   * @param string         $foursquare_id
+   * @param int            $reply_to_message_id
+   * @param KeyboardMarkup $reply_markup
+   *
+   * @return Array
+   */
+  public function sendVenue($chat_id, $latitude, $longitude, $title, $address, $foursquare_id = null, $reply_to_message_id = null, $reply_markup = null)
+  {
+    $params = compact('chat_id', 'latitude', 'longitude', 'title', 'address', 'foursquare_id', 'reply_to_message_id', 'reply_markup');
+
+    return $this->sendRequest('sendVenue', $params);
+  }
+  
+  /**
+   * Send Contact.
+   *
+   * @link https://core.telegram.org/bots/api#sendcontact
+   *
+   * @param int            $chat_id
+   * @param string         $phonenumber
+   * @param string         $first_name
+   * @param string         $last_name
+   * @param bool           $disable_notification
+   * @param int            $reply_to_message_id
+   * @param KeyboardMarkup $reply_markup
+   *
+   * @return Array
+   */
+  public function sendContact($chat_id, $phone_number, $first_name, $last_name = null, $reply_to_message_id = null, $reply_markup = null)
+  {
+    $params = compact('chat_id', 'phone_number', 'first_name', 'last_name', 'reply_to_message_id', 'reply_markup');
+
+    return $this->sendRequest('sendContact', $params);
+  }
+  
+  /**
    * Send Chat Action.
    *
    * @link https://core.telegram.org/bots/api#sendchataction
