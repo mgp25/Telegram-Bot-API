@@ -492,6 +492,7 @@ class telegramBot
         'image/bmp'   =>  '.bmp',
         'image/tiff'  =>  '.tif',
         'audio/ogg'   =>  '.ogg',
+        'audio/mpeg'  =>  '.mp3',
         'video/mp4'   =>  '.mp4',
         'image/webp'  =>  '.webp'
       );
