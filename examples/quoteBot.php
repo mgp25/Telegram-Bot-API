@@ -11,7 +11,6 @@ $tg = new telegramBot($token);
 $offset = 0;
 
   $response = $tg->pollUpdates($offset, 60);
-  $response = json_decode($response, true);
 
   if ($response['ok'])
   {
@@ -64,7 +63,7 @@ function addContact($chatID)
       )
   );
   $chat = $query->fetchAll();
-  if ($chat[0]['chat_id'] == null)
+  if ( count($chat) < 1 || $chat[0]['chat_id'] == null)
   {
     $sql = 'INSERT INTO contacts (`chat_id`, `init`) VALUES (:chat_id, :init)';
     $query = $db->prepare($sql);
