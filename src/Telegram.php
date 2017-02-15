@@ -7,7 +7,7 @@ class telegramBot
   const BASE_URL = 'https://api.telegram.org';
   const BOT_URL = '/bot';
   const FILE_URL = '/file';
-    
+
   protected $token;
 
   public function __construct($token)
@@ -224,7 +224,7 @@ class telegramBot
   {
     $data = compact('chat_id', 'audio', 'duration', 'reply_to_message_id', 'reply_markup');
 
-    if (((!is_dir($video)) && (filter_var($video, FILTER_VALIDATE_URL) === FALSE)))
+    if (((!is_dir($audio)) && (filter_var($audio, FILTER_VALIDATE_URL) === FALSE)))
       return $this->sendRequest('sendVoice', $data);
 
     return $this->uploadFile('sendVoice', $data);
@@ -272,7 +272,7 @@ class telegramBot
 
     return $this->sendRequest('sendVenue', $params);
   }
-  
+
   /**
    * Send Contact.
    *
@@ -294,7 +294,7 @@ class telegramBot
 
     return $this->sendRequest('sendContact', $params);
   }
-  
+
   /**
    * Send Chat Action.
    *
@@ -357,23 +357,23 @@ class telegramBot
    {
      return $this->sendRequest('getFile', compact('file_id'));
    }
-   
+
    /**
     * Use this method to get file Data.
     *
     * @link https://core.telegram.org/bots/api#getfile
-    * 
+    *
     * @see getFile
     *
     * @param string		$file_id
-    * @param string		$file_path		Is taken from the getFile response				
+    * @param string		$file_path		Is taken from the getFile response
     *
     * @return On success, a File Data is returned
     */
    public function getFileData($file_id, $file_path)
    {
-   	return file_get_contents($this->baseFileURL . $file_path . '?' . http_build_query(compact('file_id')));   	
-   }   
+   	return file_get_contents($this->baseFileURL . $file_path . '?' . http_build_query(compact('file_id')));
+   }
 
  /**
   * Set a Webhook to receive incoming updates via an outgoing webhook.
