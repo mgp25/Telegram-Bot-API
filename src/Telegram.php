@@ -13,40 +13,11 @@ class telegramBot
 	public function __construct($token)
 	{
 		$this->token = $token;
-		if (is_null($this->token))
+		if (is_null($this->token)) {
 			throw new TelegramException('Required "token" key not supplied');
-
+		}
 		$this->baseURL = self::BASE_URL . self::BOT_URL . $this->token . '/';
 		$this->baseFileURL = self::BASE_URL . self::FILE_URL . self::BOT_URL . $this->token . '/';
-	}
-
-	/**
-	 * A simple method for testing your bot's auth token.
-	 * Returns basic information about the bot in form of a User object.
-	 *
-	 * @link https://core.telegram.org/bots/api#getme
-	 *
-	 * @return Array
-	 */
-	public function getMe()
-	{
-		return $this->sendRequest('getMe', array());
-	}
-
-	/**
-	 * Use this method to get up to date information about the chat.
-	 * Returns a Chat object on success.
-	 *
-	 * @link https://core.telegram.org/bots/api#getchat
-	 *
-	 * @param int|string id or username of the supergroup or channel
-	 *
-	 * @return Chat object
-	 */
-	public function getChat($chat_id)
-	{
-		$params = compact('chat_id');
-		return $this->sendRequest('getChat', $params);
 	}
 
 	/**
@@ -63,8 +34,20 @@ class telegramBot
 	public function pollUpdates($offset = null, $timeout = null, $limit = null)
 	{
 		$params = compact('offset', 'limit', 'timeout');
-
 		return $this->sendRequest('getUpdates', $params);
+	}
+
+	/**
+	 * A simple method for testing your bot's auth token.
+	 * Returns basic information about the bot in form of a User object.
+	 *
+	 * @link https://core.telegram.org/bots/api#getme
+	 *
+	 * @return Array
+	 */
+	public function getMe()
+	{
+		return $this->sendRequest('getMe', array());
 	}
 
 	/**
@@ -84,7 +67,6 @@ class telegramBot
 	public function sendMessage($chat_id, $text, $parse_mode = null, $disable_web_page_preview = false, $reply_to_message_id = null, $reply_markup = null)
 	{
 		$params = compact('chat_id', 'text', 'parse_mode', 'disable_web_page_preview', 'reply_to_message_id', 'reply_markup');
-
 		return $this->sendRequest('sendMessage', $params);
 	}
 
@@ -102,7 +84,6 @@ class telegramBot
 	public function forwardMessage($chat_id, $from_chat_id, $message_id)
 	{
 		$params = compact('chat_id', 'from_chat_id', 'message_id');
-
 		return $this->sendRequest('forwardMessage', $params);
 	}
 
@@ -122,10 +103,9 @@ class telegramBot
 	public function sendPhoto($chat_id, $photo, $caption = null, $reply_to_message_id = null, $reply_markup = null)
 	{
 		$data = compact('chat_id', 'photo', 'caption', 'reply_to_message_id', 'reply_markup');
-
-		if (((!is_dir($photo)) && (filter_var($photo, FILTER_VALIDATE_URL) === FALSE)))
+		if (((!is_dir($photo)) && (filter_var($photo, FILTER_VALIDATE_URL) === FALSE))) {
 			return $this->sendRequest('sendPhoto', $data);
-
+		}
 		return $this->uploadFile('sendPhoto', $data);
 	}
 
@@ -147,10 +127,9 @@ class telegramBot
 	public function sendAudio($chat_id, $audio, $duration = null, $performer = null, $title = null, $reply_to_message_id = null, $reply_markup = null)
 	{
 		$data = compact('chat_id', 'audio', 'duration', 'performer', 'title', 'reply_to_message_id', 'reply_markup');
-
-		if (((!is_dir($audio)) && (filter_var($audio, FILTER_VALIDATE_URL) === FALSE)))
+		if (((!is_dir($audio)) && (filter_var($audio, FILTER_VALIDATE_URL) === FALSE))) {
 			return $this->sendRequest('sendAudio', $data);
-
+		}
 		return $this->uploadFile('sendAudio', $data);
 	}
 
@@ -169,10 +148,9 @@ class telegramBot
 	public function sendDocument($chat_id, $document, $reply_to_message_id = null, $reply_markup = null)
 	{
 		$data = compact('chat_id', 'document', 'reply_to_message_id', 'reply_markup');
-
-		if (((!is_dir($document)) && (filter_var($document, FILTER_VALIDATE_URL) === FALSE)))
+		if (((!is_dir($document)) && (filter_var($document, FILTER_VALIDATE_URL) === FALSE))) {
 			return $this->sendRequest('sendDocument', $data);
-
+		}
 		return $this->uploadFile('sendDocument', $data);
 	}
 
@@ -191,10 +169,9 @@ class telegramBot
 	public function sendSticker($chat_id, $sticker, $reply_to_message_id = null, $reply_markup = null)
 	{
 		$data = compact('chat_id', 'sticker', 'reply_to_message_id', 'reply_markup');
-
-		if (((!is_dir($sticker)) && (filter_var($sticker, FILTER_VALIDATE_URL) === FALSE)))
+		if (((!is_dir($sticker)) && (filter_var($sticker, FILTER_VALIDATE_URL) === FALSE))) {
 			return $this->sendRequest('sendSticker', $data);
-
+		}
 		return $this->uploadFile('sendSticker', $data);
 	}
 
@@ -216,9 +193,9 @@ class telegramBot
 	{
 		$data = compact('chat_id', 'video', 'duration', 'caption', 'reply_to_message_id', 'reply_markup');
 
-		if (((!is_dir($video)) && (filter_var($video, FILTER_VALIDATE_URL) === FALSE)))
+		if (((!is_dir($video)) && (filter_var($video, FILTER_VALIDATE_URL) === FALSE))) {
 			return $this->sendRequest('sendVideo', $data);
-
+		}
 		return $this->uploadFile('sendVideo', $data);
 	}
 
@@ -238,10 +215,9 @@ class telegramBot
 	public function sendVoice($chat_id, $audio, $duration = null, $reply_to_message_id = null, $reply_markup = null)
 	{
 		$data = compact('chat_id', 'audio', 'duration', 'reply_to_message_id', 'reply_markup');
-
-		if (((!is_dir($audio)) && (filter_var($audio, FILTER_VALIDATE_URL) === FALSE)))
+		if (((!is_dir($audio)) && (filter_var($audio, FILTER_VALIDATE_URL) === FALSE))) {
 			return $this->sendRequest('sendVoice', $data);
-
+		}
 		return $this->uploadFile('sendVoice', $data);
 	}
 
@@ -261,7 +237,6 @@ class telegramBot
 	public function sendLocation($chat_id, $latitude, $longitude, $reply_to_message_id = null, $reply_markup = null)
 	{
 		$params = compact('chat_id', 'latitude', 'longitude', 'reply_to_message_id', 'reply_markup');
-
 		return $this->sendRequest('sendLocation', $params);
 	}
 
@@ -284,10 +259,8 @@ class telegramBot
 	public function sendVenue($chat_id, $latitude, $longitude, $title, $address, $foursquare_id = null, $reply_to_message_id = null, $reply_markup = null)
 	{
 		$params = compact('chat_id', 'latitude', 'longitude', 'title', 'address', 'foursquare_id', 'reply_to_message_id', 'reply_markup');
-
 		return $this->sendRequest('sendVenue', $params);
 	}
-
 	/**
 	 * Send Contact.
 	 *
@@ -306,7 +279,6 @@ class telegramBot
 	public function sendContact($chat_id, $phone_number, $first_name, $last_name = null, $reply_to_message_id = null, $reply_markup = null)
 	{
 		$params = compact('chat_id', 'phone_number', 'first_name', 'last_name', 'reply_to_message_id', 'reply_markup');
-
 		return $this->sendRequest('sendContact', $params);
 	}
 
@@ -332,12 +304,10 @@ class telegramBot
 			'upload_document',
 			'find_location',
 		);
-		if (isset($action) && in_array($action, $actions))
-		{
+		if (isset($action) && in_array($action, $actions)) {
 			$params = compact('chat_id', 'action');
 			return $this->sendRequest('sendChatAction', $params);
 		}
-
 		throw new TelegramException('Invalid Action! Accepted value: '.implode(', ', $actions));
 	}
 
@@ -355,7 +325,6 @@ class telegramBot
 	public function getUserProfilePhotos($user_id, $offset = null, $limit = null)
 	{
 		$params = compact('user_id', 'offset', 'limit');
-
 		return $this->sendRequest('getUserProfilePhotos', $params);
 	}
 
@@ -371,6 +340,87 @@ class telegramBot
 	public function getFile($file_id)
 	{
 		return $this->sendRequest('getFile', compact('file_id'));
+	}
+
+	/**
+	 * Use this method for your bot to leave a group, supergroup or channel.
+	 * Returns True on success.
+	 *
+	 * @link https://core.telegram.org/bots/api#leavechat
+	 *
+	 * @param int|string id or username of the supergroup or channel
+	 *
+	 * @return True on success
+	 */
+	public function leaveChat($chat_id)
+	{
+		$params = compact('chat_id');
+		return $this->sendRequest('leaveChat', $params);
+	}
+
+	/**
+	 * Use this method to get up to date information about the chat.
+	 * Returns a Chat object on success.
+	 *
+	 * @link https://core.telegram.org/bots/api#getchat
+	 *
+	 * @param int|string id or username of the supergroup or channel
+	 *
+	 * @return Chat object
+	 */
+	public function getChat($chat_id)
+	{
+		$params = compact('chat_id');
+		return $this->sendRequest('getChat', $params);
+	}
+
+	/**
+	 * Use this method to get a list of administrators in a chat.
+	 * Returns an Array of ChatMember objects on success
+	 *
+	 * @link https://core.telegram.org/bots/api#getchatadministrators
+	 *
+	 * @param int|string id or username of the supergroup or channel
+	 *
+	 * @return Array of ChatMember objects
+	 */
+	public function getChatAdministrators($chat_id)
+	{
+		$params = compact('chat_id');
+		return $this->sendRequest('getChatAdministrators', $params);
+	}
+
+	/**
+	 * Use this method to get the number of members in a chat.
+	 * Returns Int on success.
+	 *
+	 * @link https://core.telegram.org/bots/api#getchatmemberscount
+	 *
+	 * @param int|string id or username of the supergroup or channel
+	 *
+	 * @return int amount of chat members
+	 */
+	public function getChatMembersCount($chat_id)
+	{
+		$params = compact('chat_id');
+		return $this->sendRequest('getChatMembersCount', $params);
+	}
+
+	/**
+	 * Use this method to get information about a member of a chat.
+	 * Returns a ChatMember object on success.
+	 *
+	 * @link https://core.telegram.org/bots/api#getchatmember
+	 *
+	 * @param int|string id or username of the supergroup or channel
+	 * @param int        Unique identifier of the target user
+	 *
+	 * @return ChatMember object
+	 */
+	public function getChatMember($chat_id, $user_id)
+	{
+		$params = compact('chat_id', 'user_id');
+		return $this->sendRequest('getChatMember', $params);
 	}
 
 	/**
@@ -401,16 +451,17 @@ class telegramBot
 	 */
 	public function setWebhook($url, $certificate = null)
 	{
-		if (filter_var($url, FILTER_VALIDATE_URL) === false)
+		if (filter_var($url, FILTER_VALIDATE_URL) === false) {
 			throw new TelegramException('Invalid URL provided');
-
-		if (parse_url($url, PHP_URL_SCHEME) !== 'https')
+		}
+		if (parse_url($url, PHP_URL_SCHEME) !== 'https') {
 			throw new TelegramException('Invalid URL, it should be a HTTPS url.');
-
-		if (is_null($certificate))
+		}
+		if (is_null($certificate)) {
 			return $this->sendRequest('setWebhook', compact('url', 'certificate'));
-		else
+		} else {
 			return $this->uploadFile('setWebhook', compact('url', 'certificate'));
+		}
 	}
 
 	/**
@@ -424,7 +475,6 @@ class telegramBot
 	public function getWebhookUpdates()
 	{
 		$body = json_decode(file_get_contents('php://input'), true);
-
 		return $body;
 	}
 
@@ -490,16 +540,12 @@ class telegramBot
 			'sendVideo'    => 'video',
 			'setWebhook'   => 'certificate'
 		);
-
-		if (filter_var($data[$key[$method]], FILTER_VALIDATE_URL))
-		{
+		if (filter_var($data[$key[$method]], FILTER_VALIDATE_URL)) {
 			$file = __DIR__ . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR . mt_rand(0, 9999);
-
 			$url = true;
 			file_put_contents($file, file_get_contents($data[$key[$method]]));
 			$finfo = finfo_open(FILEINFO_MIME_TYPE);
 			$mime_type = finfo_file($finfo, $file);
-
 			$extensions = array(
 				'image/jpeg'  => '.jpg',
 				'image/png'   =>  '.png',
@@ -511,37 +557,28 @@ class telegramBot
 				'video/mp4'   =>  '.mp4',
 				'image/webp'  =>  '.webp'
 			);
-
-			if ($method != 'sendDocument')
-			{
-				if (!array_key_exists($mime_type, $extensions))
-				{
+			if ($method != 'sendDocument') {
+				if (!array_key_exists($mime_type, $extensions)) {
 					unlink($file);
 					throw new TelegramException('Bad file type/extension');
 				}
 			}
-
 			$newFile = $file . $extensions[$mime_type];
 			rename($file, $newFile);
 			$data[$key[$method]] = new CurlFile($newFile, $mime_type, $newFile);
-		}
-		else
-		{
+		} else {
 			$finfo = finfo_open(FILEINFO_MIME_TYPE);
 			$mime_type = finfo_file($finfo, $data[$key[$method]]);
 			$data[$key[$method]] = new CurlFile($data[$key[$method]], $mime_type, $data[$key[$method]]);
 		}
-
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $this->baseURL . $method);
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-
 		$response = json_decode(curl_exec($ch), true);
-
-		if ($url)
+		if ($url) {
 			unlink($newFile);
-
+		}
 		return $response;
 	}
 
